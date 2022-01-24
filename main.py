@@ -14,15 +14,16 @@ headers = {
 
 
 def getlist():
-    print("please type your musiclist number here:")
+    print("please type your musiclist number here:", end = "")
     id = input()
-    print("please type the way to the folder you want to download:")
+    print("please type the way to the folder you want to download:", end = "")
     folder = input()
     getsongs(id, folder)
     print("success!")
-    print("Do you want to continue?(YES or NO)")
+    print("Do you want to dowload again?(YES or NO)", end = "")
     conti =input()
     if conti =='YES':
+        print("Program work again", end="\n\n")
         getlist()
 
 
