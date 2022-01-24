@@ -20,6 +20,10 @@ def getlist():
     folder = input()
     getsongs(id, folder)
     print("success!")
+    print("Do you want to continue?(YES or NO)")
+    conti =input()
+    if conti =='YES':
+        getlist()
 
 
 def getsongs(id, folder):
