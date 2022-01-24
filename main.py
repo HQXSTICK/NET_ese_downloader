@@ -19,6 +19,7 @@ def getlist():
     print("please type the way to the folder you want to download:")
     folder = input()
     getsongs(id, folder)
+    print("success!")
 
 
 def getsongs(id, folder):
