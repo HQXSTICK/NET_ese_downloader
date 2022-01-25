@@ -1,10 +1,5 @@
 # version 1.0.2
 # author HQXSTICK
-# version 1.0.1
-# author HQXSTICK
-
-# version 1.0.1
-# author HQXSTICK
 
 from genericpath import exists
 from importlib.resources import path
