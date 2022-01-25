@@ -1,4 +1,4 @@
-# version 1.0.3
+# version 0.0.4
 # author HQXSTICK
 
 from genericpath import exists
@@ -29,23 +29,25 @@ def getlist(id, folder):
 def getpath():
     print("please type your musiclist number here: ", end="")
     id = input()
-    print("please type the way to the folder you want to download: ", end="")
+    print("please type the way to the folder you want to download (if the path does not exist, it will create it): ", end="")
     folder = input()
     if os.path.isdir(folder):
         getlist(id, folder)
     else:
-        while not os.path.isdir(folder):
-            print("the path doesn't exist, try again: ", end='')
-            folder = input()
+        os.makedirs(folder)
         getlist(id, folder)
 
 
 def getsongs(id, folder):
     playlist_url = "https://music.163.com/playlist?id=%s" % id
     res = requests.get(playlist_url, headers=headers)
-    cnt = 1
     for i in re.findall(r'<a href="/song\?id=(\d+)">(.*?)</a>', res.text):
         download_url = "http://music.163.com/song/media/outer/url?id=%s" % i[0]
+        music_name_url = "https://music.163.com/song?id=%s" % i[0]
+        music_html = requests.get(music_name_url, headers=headers)
+        music_nam_list = re.findall(
+            r'<em class="f-ff2">(.*?)</em>', music_html.text)
+        music_name = music_nam_list[0]
         try:
             with open("%s/" % folder+i[1]+'.mp3', 'wb')as f:
                 f.write(requests.get(download_url, headers=headers).content)
@@ -53,10 +55,8 @@ def getsongs(id, folder):
             pass
         except OSError:
             pass
-        print("task ", end='')
-        print(cnt, end=' ')
-        print("success!")
-        cnt = cnt+1
+        print("success download ", end='')
+        print(music_name)
 
 
 if __name__ == '__main__':
