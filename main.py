@@ -3,6 +3,9 @@
 # version 1.0.1
 # author HQXSTICK
 
+# version 1.0.1
+# author HQXSTICK
+
 from genericpath import exists
 from importlib.resources import path
 import requests
@@ -45,9 +48,6 @@ def getpath():
 def getsongs(id, folder):
     playlist_url = "https://music.163.com/playlist?id=%s" % id
     res = requests.get(playlist_url, headers=headers)
-    mylog = open('html.html', mode='a', encoding='utf-8')
-    print(res.text, file=mylog)
-    mylog.close()
     cnt = 1
     for i in re.findall(r'<a href="/song\?id=(\d+)">(.*?)</a>', res.text):
         download_url = "http://music.163.com/song/media/outer/url?id=%s" % i[0]
