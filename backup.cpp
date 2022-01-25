@@ -22,9 +22,10 @@ void Powershell() {
 }
 
 int main() {
-  _local = "C:\\Users\\90651\\Music";
+  cout << "please put your path here: ";
+  cin >> _local;
   for (int i = 1; num != "0"; i++) {
-    cout << "[Task " << i << " Begin],please input you musicid: ";
+    cout << "[Task " << i << " Begin],please put your musicid here:\n";
     ifstream fin("num.in");
     cin >> num;
     local = _local;
@@ -32,7 +33,7 @@ int main() {
     if (num != "0") {
       Powershell();
     }
-    cout << "[Task " << i << " End]\n";
+    cout << "[Task " << i << " success]\n";
   }
   return 0;
 }
