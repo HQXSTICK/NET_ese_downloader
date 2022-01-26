@@ -7,6 +7,8 @@ import requests
 import re
 import os.path
 from multiprocessing import Pool
+from DecryptLogin import login
+
 headers = {
     'Referer': 'https://music.163.com/',
     "User-Agent": "Chrome/97.0.4692.99"
@@ -18,24 +20,49 @@ headers = {
 
 def getlist(id, folder):
     getsongs(id, folder)
-    print("DONE!")
-    print("Do you want to download again?(YES or NO) ", end="")
+    print("\033[33mDONE!\033[0m")
+    print("Do you want to download again?(YES or NO) \033[34m", end="")
     conti = input()
+    conti.upper()
+    while (conti != 'YES') & (conti != 'NO'):
+        print("\033[31mERR: invalid option, please try again: \033[0m", end='')
+        conti = input()
+        conti.upper()
     if conti == 'YES':
-        print("Program work again", end="\n\n")
+        print("\033[32mProgram work again\033[0m", end="\n\n")
         getpath()
 
 
-def getpath():
-    print("please type your musiclist number here: ", end="")
-    id = input()
-    print("please type the way to the folder you want to download (if the path does not exist, it will create it): ", end="")
-    folder = input()
+def start(id, folder):
     if os.path.isdir(folder):
         getlist(id, folder)
     else:
         os.makedirs(folder)
         getlist(id, folder)
+
+
+def getpath():
+    print("\033[0mplease type your musiclist number here: \033[34m", end="")
+    id = input()
+    print("\033[0mplease type the way to the folder you want to download (if the path does not exist, it will create it): \033[34m", end="")
+    folder = input()
+    print("\033[0mdo you want to download more than 10 musics? If yes, you must use your username and your password(YES or NO): \033[34m", end='')
+    chose = input()
+    chose.upper()
+    while (chose != 'YES') & (chose != 'NO'):
+        print("\033[31mERR: invalid option, please try again: \033[0m", end='')
+        chose = input()
+        chose.upper()
+    if chose == "YES":
+        print("please input your username here: ", end='')
+        username = input()
+        print("please input your password here: ", end='')
+        password = input()
+        lg = login.Login()
+        infos_return, session = lg.music163(username, password, 'pc')
+        start(id, folder)
+    elif chose == 'NO':
+        start(id, folder)
 
 
 def getsongs(id, folder):
@@ -55,7 +82,7 @@ def getsongs(id, folder):
             pass
         except OSError:
             pass
-        print("success download ", end='')
+        print("\033[32msuccess download \033[36m", end='')
         print(music_name)
 
 
